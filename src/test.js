@@ -7,7 +7,7 @@ import Pokemon from './components/pokemon'
 import TeamStats from './components/team-stats'
 import { withStyles } from '@material-ui/core'
 import { appStyles } from './styles'
-import './App.css'
+import './test.css'
 
 function App(props) {
   const {classes} = props
