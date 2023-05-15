@@ -1,3 +1,5 @@
+// This component returns the pokemon sprite (from Pokemon Showdown) when a pokemon is selected
+
 import React from 'react'
 import { observer } from 'mobx-react'
 import store from '../../store'
@@ -12,19 +14,14 @@ class Sprite extends React.Component {
 
     let spriteFilename = pokemon // pokemon sprite file name
 
-    // If user has chosen a pokemon
     if (pokemon) {
-      // We only need to modify spriteFilename if the pokemon has an alternate form
-      if (store.form(pokemon)) {
-        /*
-         * the sprite file name consists of two parts: base species name and form name
-         * separated by a hyphen, all lowercase
-         */
+      if (store.form(pokemon)) { // if the pokemon has an alternate form, have to modify spriteFilename 
+
         const spriteFilenamePart1 = store.baseSpecies(pokemon).toLowerCase()
         const spriteFilenamePart2 = store.form(pokemon)
           .toLowerCase()
           .replace('-', '')
-        spriteFilename = `${spriteFilenamePart1}-${spriteFilenamePart2}`
+        spriteFilename = `${spriteFilenamePart1}-${spriteFilenamePart2}` // modified name: pokemonName-formName
       }
     }
 
@@ -33,8 +30,8 @@ class Sprite extends React.Component {
         {spriteFilename ? 
           <img 
             alt={spriteFilename}
-            src={`https://play.pokemonshowdown.com/sprites/xyani/${spriteFilename}.gif`} /* URL from Pokemon Showdown */
-            style={{maxHeight: '100%', maxWidth: '100%'}} /* keep the image contained in its div box */
+            src={`https://play.pokemonshowdown.com/sprites/xyani/${spriteFilename}.gif`}
+            style={{maxHeight: '100%', maxWidth: '100%'}} // keep the image contained in div box
           /> : []}
       </div>
     )

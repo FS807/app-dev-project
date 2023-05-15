@@ -1,11 +1,13 @@
+// This component contains all the data of the pokemon
+
 import { observable, computed } from 'mobx'
 import pokedexData from './data/pokedex'
-import battleItemsData from './data/items'
+import itemsData from './data/items'
 import miniLearnsets from './data/learnsets.min'
 import typechart from './data/typechart'
 import moves from './data/moves'
 
-const cleanSlate = { // clean slate refers to a team that has no weakneses/resistances (see below)
+const initialCoverage = { // refers to a team that has no weakneses/resistances
   Bug: 0,
   Dark: 0,
   Dragon: 0,
@@ -27,9 +29,9 @@ const cleanSlate = { // clean slate refers to a team that has no weakneses/resis
 }
 
 class Store {
-  /* Data about the Pokemon team */
+  /* Pokemon Team Data */
   @observable pokemon = Array(6).fill({
-    name: '', // unhyphenated
+    name: '',
     item: '',
     move1: '',
     move2: '',
@@ -39,24 +41,25 @@ class Store {
   })
 
   /* Pokedex Info */
-  @observable pokedex = {...pokedexData} // copy, not reference, imported pokedex data
+  @observable pokedex = {...pokedexData} // copy pokedex data from ./data/pokedex.js
 
   @computed get allPokemon() {
     return Object.keys(this.pokedex)
   }
 
   @computed get allPokemonNames() {
-    return this.allPokemon.map(pokemon => this.pokedex[pokemon].species) // species is name
+    return this.allPokemon.map(pokemon => this.pokedex[pokemon].species) // species = name of Pokemon
   }
 
-  @computed get abilities() { // the possible abilities of the six pokemon
-    let abilities = [] // will contain the abilities of six pokemon
+  /* ABILITIES */
+  @computed get abilities() {
+    let abilities = [] // will contain the abilities of the pokemon team
     
     for (const pkmn of this.pokemon) {
       if (pkmn.name) {
-        const pkmnAbilities = this.pokedex[pkmn.name].abilities // the specific pokemon's ability (obj)
-        const pkmnAbilitiesArr = Object.values(pkmnAbilities) // the specific pokemon's ability (arr)
-        abilities.push(pkmnAbilitiesArr)
+        const pkmnAbilities = this.pokedex[pkmn.name].abilities // the specific pokemon's ability as an object
+        const pkmnAbilitiesArray = Object.values(pkmnAbilities) // the specific pokemon's ability as an array
+        abilities.push(pkmnAbilitiesArray)
       } else {
         abilities.push([])
       }
@@ -65,23 +68,20 @@ class Store {
     return abilities
   }
 
-  // Returns 
   baseSpecies(pokemon) {
-    return store.pokedex[pokemon].baseSpecies
+    return store.pokedex[pokemon].baseSpecies // returns name of pokemon
   }
 
-  // Returns the form name of a pokemon
-  // E.g. Charizard Mega-X's form is Mega-X
   form(pokemon) {
-    return store.pokedex[pokemon].form
+    return store.pokedex[pokemon].form // returns name of a pokemon's form
   }
 
-  /* All Battle Items */
-  @observable battleItems = Object.values(battleItemsData).map(item => item.name)
+  /* ITEMS */
+  @observable items = Object.values(itemsData).map(item => item.name)
 
-  /* Get the Learnsets of the Team's Six Pokemon */
+  /* LEARNSETS */
   @computed get learnsets() {
-    let learnsets = [] // will contain the learnsets of six pokemon
+    let learnsets = [] // contains the learnsets of the pokemon team
 
     for (const pkmn of this.pokemon) {
       if (pkmn.name) {
@@ -95,14 +95,12 @@ class Store {
     return learnsets
   }
 
-  /* Pokemon Type-Related Stuff */
-  // Get the type of the team's six pokemon
-  @computed get types() {
+  @computed get types() { // get the types of the pokemon team
     let types = []
 
     for (const pkmn of this.pokemon) {
       if (pkmn.name) {
-        const pkmnTypes = this.pokedex[pkmn.name].types // the specific pokemon's type(s)
+        const pkmnTypes = this.pokedex[pkmn.name].types // pkmnTypes = the specific pokemon's type(s)
         types.push(pkmnTypes)
       } else {
         types.push([])
@@ -112,34 +110,36 @@ class Store {
     return types
   }
 
-  @computed get typeDefence() {
-    let typeDefence = {...cleanSlate}
+  /* TYPE DEFENSE FUNCTION */
+  @computed get typeDefense() {
+    let typeDefense = {...initialCoverage}
 
     if (this.types.some(arr => arr.length)) { // is 2D array empty or not
-      for (const pkmnTypes of this.types) { // pkmnTypes means a specific pokemon's type(s)
-        for(const pkmnType of pkmnTypes) { // get one of the one/two types (yknow, if the pokemonis multi-typed)
-          const dmgTaken = typechart[pkmnType] // pkmnType refers to one of a specific pokemon's type
+      for (const pkmnTypes of this.types) {
+        for(const pkmnType of pkmnTypes) { // get one of the types (in case the pokemon is dual-typed)
+          const dmgTaken = typechart[pkmnType] // pkmnType vs. pkmnTypes: former refers to one type only
           
-          let updatedTypeDefence = {}
+          let updatedtypeDefense = {}
           
-          Object.keys(typeDefence).map(type => ( // type refers to a generic pokemon type
-            updatedTypeDefence[type] = typeDefence[type] + dmgTaken[type]
+          Object.keys(typeDefense).map(type => ( // type refers to a pokemon type, not of a specific pokemon
+            updatedtypeDefense[type] = typeDefense[type] + dmgTaken[type]
           ))
-          typeDefence = updatedTypeDefence
+          typeDefense = updatedtypeDefense
         }
       }
     }
 
-    return typeDefence
+    return typeDefense
   }
 
+  /* TYPE COVERAGE FUNCTION */
   @computed get typeCoverage() {
-    let typeCoverage = {...cleanSlate}
+    let typeCoverage = {...initialCoverage}
 
     for (const pokemon of this.pokemon) {
       for(const prop in pokemon) {
         // if it is a non-empty move
-        if (pokemon[prop] && prop.slice(0, -1) === 'move') { // the slice() removes the last letter
+        if (pokemon[prop] && prop.slice(0, -1) === 'move') { // slice() removes the last letter
           const move = moves[pokemon[prop]]
           const dmgDealt = typechart[move.type]
 
@@ -156,17 +156,9 @@ class Store {
 
     return typeCoverage
   }
-
-  // @observable settings = {...this.typeDefence} // in progress filters/settings
 }
 
 // FOR DEBUGGING
 let store = window.store = new Store()
 
 export default store
-
-// autorun(() => console.log(store.types))
-
-/* FOR BUILD
-export default new Store()
-*/

@@ -21,5 +21,5 @@ export const pokemonGridItemStyles = () => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  } // otherwise the grid items will overflow
+  }
 })

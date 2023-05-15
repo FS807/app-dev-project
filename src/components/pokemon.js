@@ -1,3 +1,5 @@
+// This component contains 8 items about each pokemon: Name, Item, 4 Moves, Ability, and Sprite
+
 import React from 'react'
 import PokemonInput from './pokemon/pokemon-input'
 import Sprite from './pokemon/sprite'
@@ -20,7 +22,6 @@ function Pokemon(props) {
 
   let counter = 1
 
-  // 8 Grid Items About Each Pokemon
   const pokemonInputs = placeholders.map((placeholder, i) => {
     if (placeholder) {
       let pokemonProp = placeholder.toLowerCase()

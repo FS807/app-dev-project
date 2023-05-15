@@ -1,3 +1,5 @@
+/* light grey background to match the white cards */
+/* planning to make a dark mode/light mode switch */
 body {
     min-height: 100vh;
     font-family: sans-serif;

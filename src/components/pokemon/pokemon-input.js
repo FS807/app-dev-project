@@ -1,3 +1,5 @@
+// This component returns the text field from integration-react-select.js
+
 import React from 'react'
 import { observer } from 'mobx-react'
 import store from '../../store'
@@ -12,11 +14,6 @@ class PokemonInput extends React.Component {
     this.i = this.props.teamSlot - 1
   }
 
-  /*
-   * 1. If you change the pokemon name, <IntegrationReactSelect /> triggers this function.
-   * 2. It updates the change to the store.
-   * 3. Since the store is reactive, the prop value passed to <IntegrationReactSelect /> will be updated too.
-   */
   handleChange = inputVal => {
     store.pokemon[this.i][this.props.pokemonProp] = inputVal
   }

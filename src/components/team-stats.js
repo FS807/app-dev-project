@@ -1,3 +1,5 @@
+// This component contains a card that lists all the pokemon types
+
 import React from 'react'
 import { observer } from 'mobx-react'
 import store from '../store'

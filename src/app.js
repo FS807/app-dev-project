@@ -1,5 +1,6 @@
+// Main App Component
+
 import React from 'react'
-// My Component Imports
 import Grid from '@material-ui/core/Grid'
 import { Paper } from '@material-ui/core'
 import Pokemon from './components/pokemon'
@@ -11,20 +12,18 @@ import './App.css'
 function App(props) {
   const {classes} = props
 
-  // 3 Right Cards
   const cardTitles = [
     1,
     2,
-    'Type Defence',
+    'Type Defense',
     3,
     4,
     'Type Coverage',
     5,
-    6,
-    // 'in progress filters/settings',
+    6
   ]
 
-  // 9 Total Cards
+  // 8 Total Cards
   const cards = cardTitles.map((cardTitle, i) => {
     if (typeof cardTitle === 'number') {
       return (
@@ -37,7 +36,7 @@ function App(props) {
       )
     } else {
       return (
-        // 3 Right Cards
+        // 2 more Cards: Type Defense and Type Coverage
         <Grid key={i} item xs={6}>
           <Paper className={classes.paper}>
             <TeamStats title={cardTitle} />
@@ -48,7 +47,7 @@ function App(props) {
   })
 
   return (
-    // All 9 Cards
+    // All 8 Cards
     <React.Fragment>
       <Grid container spacing={24}>
         {cards}

@@ -1,3 +1,4 @@
+// This component makes a text field with a dropdown
 // Source code initially take from here: https://material-ui.com/demos/autocomplete/
 
 import React from 'react'
