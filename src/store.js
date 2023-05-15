@@ -2,7 +2,7 @@
 
 import { observable, computed } from 'mobx'
 import pokedexData from './data/pokedex'
-import itemsData from './data/items'
+import battleItemsData from './data/items'
 import miniLearnsets from './data/learnsets.min'
 import typechart from './data/typechart'
 import moves from './data/moves'
@@ -77,7 +77,7 @@ class Store {
   }
 
   /* ITEMS */
-  @observable items = Object.values(itemsData).map(item => item.name)
+  @observable battleItems = Object.values(battleItemsData).map(item => item.name)
 
   /* LEARNSETS */
   @computed get learnsets() {
