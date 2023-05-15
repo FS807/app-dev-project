@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/FS807/app-dev-project/static/css/main.130998ba.css",
-    "main.js": "/FS807/app-dev-project/static/js/main.fad0a4b1.js",
-    "static/js/787.fc290a72.chunk.js": "/FS807/app-dev-project/static/js/787.fc290a72.chunk.js",
-    "index.html": "/FS807/app-dev-project/index.html",
-    "main.130998ba.css.map": "/FS807/app-dev-project/static/css/main.130998ba.css.map",
-    "main.fad0a4b1.js.map": "/FS807/app-dev-project/static/js/main.fad0a4b1.js.map",
-    "787.fc290a72.chunk.js.map": "/FS807/app-dev-project/static/js/787.fc290a72.chunk.js.map"
+    "main.css": "/app-dev-project/static/css/main.130998ba.css",
+    "main.js": "/app-dev-project/static/js/main.aa8a7864.js",
+    "static/js/787.fc290a72.chunk.js": "/app-dev-project/static/js/787.fc290a72.chunk.js",
+    "index.html": "/app-dev-project/index.html",
+    "main.130998ba.css.map": "/app-dev-project/static/css/main.130998ba.css.map",
+    "main.aa8a7864.js.map": "/app-dev-project/static/js/main.aa8a7864.js.map",
+    "787.fc290a72.chunk.js.map": "/app-dev-project/static/js/787.fc290a72.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.130998ba.css",
-    "static/js/main.fad0a4b1.js"
+    "static/js/main.aa8a7864.js"
   ]
 }
